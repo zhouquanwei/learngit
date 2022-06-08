@@ -1,0 +1,61 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: template-ms
+  datasource:
+    url: jdbc:mysql://192.168.8.131:3306/aws?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: jumenguat123!
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.8.230:8848,192.168.8.230:8849,192.168.8.230:8850
+server:
+  port: 8001
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /app/logs/tomcat/${spring.application.name}
+      pattern: '%h "%{yyyy-MM-dd HH:mm:ss.SSS}t" "%r" %s %b %D'
+    basedir: /app/logs/tomcat/${spring.application.name} # 修改tomcat临时目录，文件上传会用到，使用默认的话，长时间（10天左右）不实用会被系统自动删除
+    max-threads: 500  # tomcat线程池，4核8G的推荐800左右， 我们有些是2核4G的，所以可以设置500
+    min-spare-threads: 100 # 最小工作空闲线程数，默认10。（适当增大一些，以便应对突然增长的访问量）
+ribbon:
+  # 配置ribbon的饥饿模式，解决首次懒加载慢的问题
+  eager-load:
+    enabled: true
+    clients: atf-ms #此处写服务ID就可以了
+  #ribbon同一台服务不重试 , 重试下一台服务一次
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  ConnectTimeout: 2000  # 连接超时
+  ReadTimeout: 3000   # 读取超时
+feign:
+  hystrix:
+    enabled: true # 开启hystrix
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 # 超时熔断时间， 设置成ribbon的超时时间的两倍，ribbon设置了会重试nextServer
+  threadpool:
+    default:
+      coreSize: 20 #并发执行的最大线程数，默认10
+      maxQueueSize: 5000 #BlockingQueue的最大队列数，默认值-1 ， 该值推荐设置的大一点 ， 因为可以通过queueSizeRejectionThreshold动态调整
+      queueSizeRejectionThreshold: 800 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝，默认值5
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 开启监控
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case : true
+#  httpclient:
+#    enabled: true

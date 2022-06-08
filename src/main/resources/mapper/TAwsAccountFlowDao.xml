@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jumstc.template.domain.mapper.TAwsAccountFlowDao">
+  <resultMap id="BaseResultMap" type="com.jumstc.template.domain.entity.TAwsAccountFlow">
+    <id column="flow_id" jdbcType="BIGINT" property="flowId" />
+    <result column="account_no" jdbcType="BIGINT" property="accountNo" />
+    <result column="base_account_no" jdbcType="BIGINT" property="baseAccountNo" />
+    <result column="pay_part_no" jdbcType="VARCHAR" property="payPartNo" />
+    <result column="pay_part_name" jdbcType="VARCHAR" property="payPartName" />
+    <result column="pay_part_type" jdbcType="TINYINT" property="payPartType" />
+    <result column="before_amount" jdbcType="DECIMAL" property="beforeAmount" />
+    <result column="before_total_amount" jdbcType="DECIMAL" property="beforeTotalAmount" />
+    <result column="ops_amount" jdbcType="DECIMAL" property="opsAmount" />
+    <result column="after_amount" jdbcType="DECIMAL" property="afterAmount" />
+    <result column="after_total_amount" jdbcType="DECIMAL" property="afterTotalAmount" />
+    <result column="ops_type" jdbcType="TINYINT" property="opsType" />
+    <result column="biz_type" jdbcType="TINYINT" property="bizType" />
+    <result column="out_biz_no" jdbcType="VARCHAR" property="outBizNo" />
+    <result column="inner_trans_no" jdbcType="VARCHAR" property="innerTransNo" />
+    <result column="biz_nature" jdbcType="TINYINT" property="bizNature" />
+    <result column="business_company_code" jdbcType="VARCHAR" property="businessCompanyCode" />
+    <result column="business_company_name" jdbcType="VARCHAR" property="businessCompanyName" />
+    <result column="receive_account_no" jdbcType="BIGINT" property="receiveAccountNo" />
+    <result column="receive_base_account_no" jdbcType="BIGINT" property="receiveBaseAccountNo" />
+    <result column="receive_part_no" jdbcType="VARCHAR" property="receivePartNo" />
+    <result column="receive_part_name" jdbcType="VARCHAR" property="receivePartName" />
+    <result column="receive_part_type" jdbcType="TINYINT" property="receivePartType" />
+    <result column="flow_type" jdbcType="TINYINT" property="flowType" />
+    <result column="is_show" jdbcType="TINYINT" property="isShow" />
+    <result column="freeze_status" jdbcType="TINYINT" property="freezeStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="related_flow_id" jdbcType="BIGINT" property="relatedFlowId" />
+    <result column="create_user_code" jdbcType="VARCHAR" property="createUserCode" />
+    <result column="create_user_type" jdbcType="TINYINT" property="createUserType" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="create_user_phone" jdbcType="VARCHAR" property="createUserPhone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="valid" jdbcType="TINYINT" property="valid" />
+    <result column="reckon_status" jdbcType="TINYINT" property="reckonStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    flow_id, account_no, base_account_no, pay_part_no, pay_part_name, pay_part_type, 
+    before_amount, before_total_amount, ops_amount, after_amount, after_total_amount, 
+    ops_type, biz_type, out_biz_no, inner_trans_no, biz_nature, business_company_code, 
+    business_company_name, receive_account_no, receive_base_account_no, receive_part_no, 
+    receive_part_name, receive_part_type, flow_type, is_show, freeze_status, remark, 
+    related_flow_id, create_user_code, create_user_type, create_user_name, create_user_phone, 
+    create_time, update_time, `valid`, reckon_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from aws.t_aws_account_flow where flow_id>#{page}  order by flow_id limit #{pageSize}
+  </select>
+  <select id="selectByPageSize" resultType="com.jumstc.template.domain.entity.TAwsAccountFlow">
+    select
+    <include refid="Base_Column_List" />
+    from aws.t_aws_account_flow  order by flow_id  limit #{pageSize},#{pageSize}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from aws.t_aws_account_flow
+    where flow_id = #{flowId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="flow_id" keyProperty="flowId" parameterType="com.jumstc.template.domain.entity.TAwsAccountFlow" useGeneratedKeys="true">
+    insert into aws.t_aws_account_flow (account_no, base_account_no, pay_part_no,
+      pay_part_name, pay_part_type, before_amount, 
+      before_total_amount, ops_amount, after_amount, 
+      after_total_amount, ops_type, biz_type, 
+      out_biz_no, inner_trans_no, biz_nature, 
+      business_company_code, business_company_name, 
+      receive_account_no, receive_base_account_no, receive_part_no, 
+      receive_part_name, receive_part_type, flow_type, 
+      is_show, freeze_status, remark, 
+      related_flow_id, create_user_code, create_user_type, 
+      create_user_name, create_user_phone, create_time, 
+      update_time, `valid`, reckon_status
+      )
+    values (#{accountNo,jdbcType=BIGINT}, #{baseAccountNo,jdbcType=BIGINT}, #{payPartNo,jdbcType=VARCHAR}, 
+      #{payPartName,jdbcType=VARCHAR}, #{payPartType,jdbcType=TINYINT}, #{beforeAmount,jdbcType=DECIMAL}, 
+      #{beforeTotalAmount,jdbcType=DECIMAL}, #{opsAmount,jdbcType=DECIMAL}, #{afterAmount,jdbcType=DECIMAL}, 
+      #{afterTotalAmount,jdbcType=DECIMAL}, #{opsType,jdbcType=TINYINT}, #{bizType,jdbcType=TINYINT}, 
+      #{outBizNo,jdbcType=VARCHAR}, #{innerTransNo,jdbcType=VARCHAR}, #{bizNature,jdbcType=TINYINT}, 
+      #{businessCompanyCode,jdbcType=VARCHAR}, #{businessCompanyName,jdbcType=VARCHAR}, 
+      #{receiveAccountNo,jdbcType=BIGINT}, #{receiveBaseAccountNo,jdbcType=BIGINT}, #{receivePartNo,jdbcType=VARCHAR}, 
+      #{receivePartName,jdbcType=VARCHAR}, #{receivePartType,jdbcType=TINYINT}, #{flowType,jdbcType=TINYINT}, 
+      #{isShow,jdbcType=TINYINT}, #{freezeStatus,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
+      #{relatedFlowId,jdbcType=BIGINT}, #{createUserCode,jdbcType=VARCHAR}, #{createUserType,jdbcType=TINYINT}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createUserPhone,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{valid,jdbcType=TINYINT}, #{reckonStatus,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="flow_id" keyProperty="flowId" parameterType="com.jumstc.template.domain.entity.TAwsAccountFlow" useGeneratedKeys="true">
+    insert into aws.t_aws_account_flow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accountNo != null">
+        account_no,
+      </if>
+      <if test="baseAccountNo != null">
+        base_account_no,
+      </if>
+      <if test="payPartNo != null">
+        pay_part_no,
+      </if>
+      <if test="payPartName != null">
+        pay_part_name,
+      </if>
+      <if test="payPartType != null">
+        pay_part_type,
+      </if>
+      <if test="beforeAmount != null">
+        before_amount,
+      </if>
+      <if test="beforeTotalAmount != null">
+        before_total_amount,
+      </if>
+      <if test="opsAmount != null">
+        ops_amount,
+      </if>
+      <if test="afterAmount != null">
+        after_amount,
+      </if>
+      <if test="afterTotalAmount != null">
+        after_total_amount,
+      </if>
+      <if test="opsType != null">
+        ops_type,
+      </if>
+      <if test="bizType != null">
+        biz_type,
+      </if>
+      <if test="outBizNo != null">
+        out_biz_no,
+      </if>
+      <if test="innerTransNo != null">
+        inner_trans_no,
+      </if>
+      <if test="bizNature != null">
+        biz_nature,
+      </if>
+      <if test="businessCompanyCode != null">
+        business_company_code,
+      </if>
+      <if test="businessCompanyName != null">
+        business_company_name,
+      </if>
+      <if test="receiveAccountNo != null">
+        receive_account_no,
+      </if>
+      <if test="receiveBaseAccountNo != null">
+        receive_base_account_no,
+      </if>
+      <if test="receivePartNo != null">
+        receive_part_no,
+      </if>
+      <if test="receivePartName != null">
+        receive_part_name,
+      </if>
+      <if test="receivePartType != null">
+        receive_part_type,
+      </if>
+      <if test="flowType != null">
+        flow_type,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="freezeStatus != null">
+        freeze_status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="relatedFlowId != null">
+        related_flow_id,
+      </if>
+      <if test="createUserCode != null">
+        create_user_code,
+      </if>
+      <if test="createUserType != null">
+        create_user_type,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="createUserPhone != null">
+        create_user_phone,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="valid != null">
+        `valid`,
+      </if>
+      <if test="reckonStatus != null">
+        reckon_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accountNo != null">
+        #{accountNo,jdbcType=BIGINT},
+      </if>
+      <if test="baseAccountNo != null">
+        #{baseAccountNo,jdbcType=BIGINT},
+      </if>
+      <if test="payPartNo != null">
+        #{payPartNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payPartName != null">
+        #{payPartName,jdbcType=VARCHAR},
+      </if>
+      <if test="payPartType != null">
+        #{payPartType,jdbcType=TINYINT},
+      </if>
+      <if test="beforeAmount != null">
+        #{beforeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="beforeTotalAmount != null">
+        #{beforeTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="opsAmount != null">
+        #{opsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="afterAmount != null">
+        #{afterAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="afterTotalAmount != null">
+        #{afterTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="opsType != null">
+        #{opsType,jdbcType=TINYINT},
+      </if>
+      <if test="bizType != null">
+        #{bizType,jdbcType=TINYINT},
+      </if>
+      <if test="outBizNo != null">
+        #{outBizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="innerTransNo != null">
+        #{innerTransNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizNature != null">
+        #{bizNature,jdbcType=TINYINT},
+      </if>
+      <if test="businessCompanyCode != null">
+        #{businessCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCompanyName != null">
+        #{businessCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAccountNo != null">
+        #{receiveAccountNo,jdbcType=BIGINT},
+      </if>
+      <if test="receiveBaseAccountNo != null">
+        #{receiveBaseAccountNo,jdbcType=BIGINT},
+      </if>
+      <if test="receivePartNo != null">
+        #{receivePartNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePartName != null">
+        #{receivePartName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePartType != null">
+        #{receivePartType,jdbcType=TINYINT},
+      </if>
+      <if test="flowType != null">
+        #{flowType,jdbcType=TINYINT},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="freezeStatus != null">
+        #{freezeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedFlowId != null">
+        #{relatedFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserCode != null">
+        #{createUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserType != null">
+        #{createUserType,jdbcType=TINYINT},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserPhone != null">
+        #{createUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=TINYINT},
+      </if>
+      <if test="reckonStatus != null">
+        #{reckonStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jumstc.template.domain.entity.TAwsAccountFlow">
+    update aws.t_aws_account_flow
+    <set>
+      <if test="accountNo != null">
+        account_no = #{accountNo,jdbcType=BIGINT},
+      </if>
+      <if test="baseAccountNo != null">
+        base_account_no = #{baseAccountNo,jdbcType=BIGINT},
+      </if>
+      <if test="payPartNo != null">
+        pay_part_no = #{payPartNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payPartName != null">
+        pay_part_name = #{payPartName,jdbcType=VARCHAR},
+      </if>
+      <if test="payPartType != null">
+        pay_part_type = #{payPartType,jdbcType=TINYINT},
+      </if>
+      <if test="beforeAmount != null">
+        before_amount = #{beforeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="beforeTotalAmount != null">
+        before_total_amount = #{beforeTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="opsAmount != null">
+        ops_amount = #{opsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="afterAmount != null">
+        after_amount = #{afterAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="afterTotalAmount != null">
+        after_total_amount = #{afterTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="opsType != null">
+        ops_type = #{opsType,jdbcType=TINYINT},
+      </if>
+      <if test="bizType != null">
+        biz_type = #{bizType,jdbcType=TINYINT},
+      </if>
+      <if test="outBizNo != null">
+        out_biz_no = #{outBizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="innerTransNo != null">
+        inner_trans_no = #{innerTransNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizNature != null">
+        biz_nature = #{bizNature,jdbcType=TINYINT},
+      </if>
+      <if test="businessCompanyCode != null">
+        business_company_code = #{businessCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCompanyName != null">
+        business_company_name = #{businessCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAccountNo != null">
+        receive_account_no = #{receiveAccountNo,jdbcType=BIGINT},
+      </if>
+      <if test="receiveBaseAccountNo != null">
+        receive_base_account_no = #{receiveBaseAccountNo,jdbcType=BIGINT},
+      </if>
+      <if test="receivePartNo != null">
+        receive_part_no = #{receivePartNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePartName != null">
+        receive_part_name = #{receivePartName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePartType != null">
+        receive_part_type = #{receivePartType,jdbcType=TINYINT},
+      </if>
+      <if test="flowType != null">
+        flow_type = #{flowType,jdbcType=TINYINT},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="freezeStatus != null">
+        freeze_status = #{freezeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedFlowId != null">
+        related_flow_id = #{relatedFlowId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserCode != null">
+        create_user_code = #{createUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserType != null">
+        create_user_type = #{createUserType,jdbcType=TINYINT},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserPhone != null">
+        create_user_phone = #{createUserPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valid != null">
+        `valid` = #{valid,jdbcType=TINYINT},
+      </if>
+      <if test="reckonStatus != null">
+        reckon_status = #{reckonStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where flow_id = #{flowId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jumstc.template.domain.entity.TAwsAccountFlow">
+    update aws.t_aws_account_flow
+    set account_no = #{accountNo,jdbcType=BIGINT},
+      base_account_no = #{baseAccountNo,jdbcType=BIGINT},
+      pay_part_no = #{payPartNo,jdbcType=VARCHAR},
+      pay_part_name = #{payPartName,jdbcType=VARCHAR},
+      pay_part_type = #{payPartType,jdbcType=TINYINT},
+      before_amount = #{beforeAmount,jdbcType=DECIMAL},
+      before_total_amount = #{beforeTotalAmount,jdbcType=DECIMAL},
+      ops_amount = #{opsAmount,jdbcType=DECIMAL},
+      after_amount = #{afterAmount,jdbcType=DECIMAL},
+      after_total_amount = #{afterTotalAmount,jdbcType=DECIMAL},
+      ops_type = #{opsType,jdbcType=TINYINT},
+      biz_type = #{bizType,jdbcType=TINYINT},
+      out_biz_no = #{outBizNo,jdbcType=VARCHAR},
+      inner_trans_no = #{innerTransNo,jdbcType=VARCHAR},
+      biz_nature = #{bizNature,jdbcType=TINYINT},
+      business_company_code = #{businessCompanyCode,jdbcType=VARCHAR},
+      business_company_name = #{businessCompanyName,jdbcType=VARCHAR},
+      receive_account_no = #{receiveAccountNo,jdbcType=BIGINT},
+      receive_base_account_no = #{receiveBaseAccountNo,jdbcType=BIGINT},
+      receive_part_no = #{receivePartNo,jdbcType=VARCHAR},
+      receive_part_name = #{receivePartName,jdbcType=VARCHAR},
+      receive_part_type = #{receivePartType,jdbcType=TINYINT},
+      flow_type = #{flowType,jdbcType=TINYINT},
+      is_show = #{isShow,jdbcType=TINYINT},
+      freeze_status = #{freezeStatus,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      related_flow_id = #{relatedFlowId,jdbcType=BIGINT},
+      create_user_code = #{createUserCode,jdbcType=VARCHAR},
+      create_user_type = #{createUserType,jdbcType=TINYINT},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_user_phone = #{createUserPhone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `valid` = #{valid,jdbcType=TINYINT},
+      reckon_status = #{reckonStatus,jdbcType=TINYINT}
+    where flow_id = #{flowId,jdbcType=BIGINT}
+  </update>
+</mapper>
